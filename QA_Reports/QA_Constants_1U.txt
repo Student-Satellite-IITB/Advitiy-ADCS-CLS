@@ -1,0 +1,46 @@
+﻿Quality Assurance Report
+constants_1U.py
+
+
+QA requested by: Riya 
+Date: 05/08/2018 
+Reviewer: Niket
+Permanent links:
+
+
+
+
+QA suggestions:
+1. Line 13: AU value is 149597870700 m (basically 90 m more than value in code) according to wikipedia and also a NASA website. Can be neglected if felt negligible.
+2. Line 14: R_SUN value is 695700000 m, 6957e5 m (200 km more than value in code) according to wiki and a NASA website. Also, why not use exponential notation like 695700e3 m or 6957e5 m?
+3. Date format part: TLE taken from n2yo.com on 3rd April.
+4. Satellite structural properties : Values of model 9 to be used. The link to the doc having these values (for both deployed and undeployed cases) is https://docs.google.com/document/d/18hL08SAWQt2hc548lh5toHc3qMM4wbFlX-lTmty39ms/edit
+Note: This doc also has the value of r_COG_2_COM_b which is there in disturbance model constants
+1. In disturbance model constants, only aero drag and rho values to be verified. Will update this as soon as done.
+
+
+
+QA requested by: Riya 
+Date: 26/09/2018 
+Reviewer: Anant
+Permanent links:
+
+
+
+Add to file:
+   1. v_S1([1,0,0]),v_S2([-1,0,0]),v_S3([0,1,0]),v_S4([0,-1,0]),v_S5([0,0,1]),v_S6([0,0,-1]),SS_GAIN,SS_QUANTIZER,SS_THRESHOLD - vectors of normals of sunsensors, gain of sunsensor(multiplying factor that converts dot product of sunvector with normal to voltage),  quantizer of sunsensor, threshold voltage for sunsensors to check whether it is in light or dark
+   2. GPS_POS_BIAS, GPS_VEL_BIAS, GPS_TIME_BIAS : constant bias in position, velocity and time of GPS output
+   3. MAG_BIAS : constant bias in magnetometer output
+   4. ADC_BIAS : constant bias in ADC output
+   5. ADC_COV : covariance for Gaussian noise in ADC output
+   6. GPS_POS_COV, GPS_VEL_COV, GPS_TIME_COV : covariance of gaussian noise in position, velocity and time of GPS output
+   7. MAG_COV : covariance of gaussian noise in magnetometer reading
+   8. GYRO_F_BIAS,GYRO_F_COV : mean and covariance of gaussian noise in gyroscope
+
+
+Implementation:
+   1. All suggestions has been implemented.
+
+
+Permalink
+https://github.com/Student-Satellite-IITB/Advitiy-ADCS-CLS/blob/6b38444c888339d34374feddd73da902d3d27b4e/constants_1U.py
