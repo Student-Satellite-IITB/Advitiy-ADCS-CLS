@@ -1,0 +1,42 @@
+﻿QA Report of qnv.py
+May 19, 2018
+Code written by: Anant Joshi
+QA performed by: Riya
+Changes made:
+• Removed dot and cross function because no need for row vectors.
+• Instead of single quatMultiplty declared two functions quatMultiplynorm
+and quatMultiplyUnnorm because when we want to rotate a vector by
+multiplying it with quaternion its magnitude should not change.
+• In quatRotate
+– added a line which checks if a vector is null vector and if condition
+is true it simply returns the null vector.
+– replaced 2 lines of code (which were used for calculating inverse of
+quaternion) with quatInv().
+• Corrected the error in sign in formula used in quatDer1.
+• Removed quatDer2, skew and theta2J as not needed.
+• In rotm2quat
+– changed convention of quaternion numbering from 1 to 4 to 0 to 3
+because the latter convention is followed in quat2rotm and the book.
+– corrected the error in sign in formula used.
+• In quat2rotm multiplied M1 with 2 and M2 with -1 so that it matches
+with the given formula.
+• Added comments for better understanding of what a function is doing.
+ 
+ 
+QA requested by: Riya
+Date: 5/8/18
+Reviewer: Anant Joshi
+
+
+Permanent links:        1.https://github.com/rsriya/Advitiy-Control-Model/blob/5b7051d719e1cd3dcf9efea201ac981c706aee6c/qnv.py
+2.https://github.com/rsriya/Advitiy-Control-Model/blob/2296320a2d1de29e8479b94e85535469d77f55fc/test_qnv_2.py
+3.https://github.com/rsriya/Advitiy-Control-Model/blob/2296320a2d1de29e8479b94e85535469d77f55fc/test-data/test_quatDerBO.json
+4.https://github.com/rsriya/Advitiy-Control-Model/blob/2296320a2d1de29e8479b94e85535469d77f55fc/RM_qnv_02.pdf
+
+
+QA suggestions:
+1. Change omega1 to v_omega to show data type
+2. Change W_vector to v_qv_dot
+3. Change W_scalar to qs_dot
+4. “omega1 = v_q_BI_b + R*v_q_BO_b” is wrong. The right hand side contains quaternions according to the v_q prefix and left hand side has angular velocity. 
+5. If the input to the function is correct, the function will return correct output.
