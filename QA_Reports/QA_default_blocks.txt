@@ -1,0 +1,40 @@
+﻿Quality Assurance Report
+default_blocks.py
+
+
+QA requested by: Riya
+Date: 28/9/2018
+Reviewer: Anant Joshi
+Permanent links:        1.https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/default_blocks.py 
+2.https://github.com/rsriya/Advitiy-Control-Model/blob/399e80680de508d8f35e77a844ff95035ff0102f/test_default_blocks.py                 3.https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/test-data/test_defaultsunsensor.json 
+4.https://github.com/rsriya/Advitiy-Control-Model/blob/325b022cfa01789decfb4e65cd67413e0cb8ec7e/README/RM_default_blocks_01.pdf 
+
+
+QA suggestions:
+1. Take only sat object as input
+2. Change default block for gps according to gps sensor model
+
+
+Implementation:
+1. All changes are implemented
+2. GPS and J2_propagator are modified.
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+QA requested by: Anant Joshi
+Date: 10/10/2018
+Reviewer: Riya
+Permanent links:        https://github.com/anantjoshi97/Advitiy-Control-Model/blob/092a433a20181b518b52e0eeced879fe0749cfd5/default_blocks.py 
+QA suggestions:[a]
+1. Input sunnvector or magvector in body frame.
+2. Line 15 - v_mag_b
+3. Line 29 - the J2 Propagator code generate csv file. Thus, this function is not compatible with the code.
+4. Line 20-22, 30-32 - use v_pos_m,v_vel_m,time_m
+Implementation:
+Implmentation done
+
+
+[a]+anantjoshi97.iitb@gmail.com
+_Assigned to Anant Joshi_
