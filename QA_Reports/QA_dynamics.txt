@@ -1,0 +1,50 @@
+﻿Quality Assurance Report
+dynamics.py
+
+
+QA requested by: Riya
+Date:        5/8/2018
+Reviewer: Anant Joshi
+Permanent links:        
+1.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/dynamics.py
+2.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/test_dynamics.py
+3.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/RM_dynamics_03.pdf
+
+
+                        
+QA suggestions:
+1. Check comments in line 20,21
+2. Test cases failed due to old version of frames. Test cases passed on updating frames. 
+
+
+Implementation:
+1. Solution of Suggestion 2 being searched
+2. Suggestion 1 implemented
+
+
+Post-QA permanent links:        
+1.https://github.com/rsriya/Advitiy-Control-Model/blob/6436cd93c81b571cd4afdfb6a4201ae27d7e9a90/detumbling.py 
+2.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/test_dynamics.py
+3.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/RM_dynamics_03.pdf
+        
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+QA requested by: Riya
+Date:        29/9/2018
+Reviewer: Anant Joshi
+Permanent links:
+1.https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/dynamics.py 
+2. https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/test_dynamics.py 
+3.https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/README/RM_dynamics_04.pdf 
+                        
+QA suggestions:
+1. Change links above
+2. Change np.matmul to np.dot in line 39
+
+
+Implementation:
+1. Suggestions implemented.
+
+
+Post-QA permanent links:
