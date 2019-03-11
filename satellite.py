@@ -85,11 +85,15 @@ class Satellite:
 	def getggDisturbance_b(self):	#get torque due to gravity gradient about centre of mass in body frame
 		return self.v_gg_dist_b
  
-	def setControl_b(self,v_control):	#set control torque in body
+	def setControl_b(self,v_control):	#set desired control torque in body
 		self.v_control_b = v_control.copy()
-
-	def getControl_b(self): #return control torque in body
+	def getControl_b(self):                 #return desired control torque in body
 		return self.v_control_b
+
+	def setAppControl_b(self,v_control):    #set applied control torque in body
+		self.v_applied_control_b = v_control.copy()
+	def getAppControl_b(self):              #return applied control torque in body
+		return self.v_applied_control_b
 
 	def setSun_i(self,v_sv_i):	#set sun vector in eci
 		self.v_sun_i = v_sv_i.copy()	
