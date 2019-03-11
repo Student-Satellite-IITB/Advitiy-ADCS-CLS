@@ -163,6 +163,23 @@ class Test_wBIB_2_wBOB(unittest.TestCase):
 		result = fr.wBIb2wBOb(w_BIB,qBO,v_w_IO_o)
 		expected = qnv.quatRotate(qBO,v_w_IO_o)
 		self.assertTrue(np.allclose(result,expected)) 
+		
+class Test_wBOB_2_wBIB(unittest.TestCase): #These test cases are made by reversing the input and output of Test_wBIB_2_wBOB
+	def test_ideal_controlled(self): 
+		v_w_IO_o = np.array([0.,0.00106178,0.])
+		qBO = np.array([1.,0.,0.,0.])
+		w_BOB = np.array([0.,0.,0.])
+		w_BIB = fr.wBOb2wBIb(w_BOB,qBO,v_w_IO_o)
+		expected = -qnv.quatRotate(qBO,v_w_IO_o)
+		self.assertTrue(np.allclose(w_BOB,expected))
 
+	@file_data('test-data/test_stationary_body.json')
+	def test_stationary_body(self,value):
+		v_w_IO_o = np.array([0.,0.00106178,0.])
+		qBO = np.asarray(value)
+		w_BOB = qnv.quatRotate(qBO,v_w_IO_o)
+		result = fr.wBOb2wBIb(w_BIB,qBO,v_w_IO_o)
+		expected = np.array([0.,0.,0.])
+		self.assertTrue(np.allclose(result,expected)) 
 if __name__=='__main__':
 	unittest.main(verbosity=2)
