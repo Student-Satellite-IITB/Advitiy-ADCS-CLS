@@ -120,8 +120,8 @@ class Test_qBI_2qBO(unittest.TestCase):
 		#above south pole, body frame, orbit frame and eci frame have same attitude wrt each other 
 		r = np.array([0.,0.,-7.07e6])
 		v = np.array([7.0e3,0.,0.])
-		qBI = np.array([1.,0.,0.,0.])
-		expected = np.array([1.,0.,0.,0.])
+		qBI = np.array([0.,0.,0.,1.])
+		expected = np.array([0.,0.,0.,1.])
 		result = fr.qBI2qBO(qBI,r,v)
 
 		self.assertTrue(np.allclose(expected ,result))
@@ -144,7 +144,7 @@ class Test_qBO_2qBI(unittest.TestCase):
 		result = fr.qBO2qBI(qnv.quatInv(qIB),r,v)
 		
 		self.assertTrue(np.allclose(qnv.quatInv(qOB) ,result))
-
+		
 @ddt
 class Test_wBIB_2_wBOB(unittest.TestCase):
 	def test_ideal_controlled(self):
@@ -163,7 +163,8 @@ class Test_wBIB_2_wBOB(unittest.TestCase):
 		result = fr.wBIb2wBOb(w_BIB,qBO,v_w_IO_o)
 		expected = qnv.quatRotate(qBO,v_w_IO_o)
 		self.assertTrue(np.allclose(result,expected)) 
-		
+
+@ddt		
 class Test_wBOB_2_wBIB(unittest.TestCase): #These test cases are made by reversing the input and output of Test_wBIB_2_wBOB
 	def test_ideal_controlled(self): 
 		v_w_IO_o = np.array([0.,0.00106178,0.])
@@ -171,14 +172,14 @@ class Test_wBOB_2_wBIB(unittest.TestCase): #These test cases are made by reversi
 		w_BOB = np.array([0.,0.,0.])
 		w_BIB = fr.wBOb2wBIb(w_BOB,qBO,v_w_IO_o)
 		expected = -qnv.quatRotate(qBO,v_w_IO_o)
-		self.assertTrue(np.allclose(w_BOB,expected))
+		self.assertTrue(np.allclose(w_BIB,expected))
 
 	@file_data('test-data/test_stationary_body.json')
 	def test_stationary_body(self,value):
 		v_w_IO_o = np.array([0.,0.00106178,0.])
 		qBO = np.asarray(value)
 		w_BOB = qnv.quatRotate(qBO,v_w_IO_o)
-		result = fr.wBOb2wBIb(w_BIB,qBO,v_w_IO_o)
+		result = fr.wBOb2wBIb(w_BOB,qBO,v_w_IO_o)
 		expected = np.array([0.,0.,0.])
 		self.assertTrue(np.allclose(result,expected)) 
 if __name__=='__main__':
