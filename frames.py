@@ -171,4 +171,4 @@ def wBOb2wBIb(v_w_BO_b,v_q_BO,v_w_IO_o):
 	#		angular velocity of ecif wrt orbit frame in orbit frame
 	#output: angular velocity of body frame wrt orbit frame in body frame
 	
-return v_w_BO_b - qnv.quatRotate(v_q_BO,v_w_IO_o)
+        return v_w_BO_b - qnv.quatRotate(v_q_BO,v_w_IO_o)
