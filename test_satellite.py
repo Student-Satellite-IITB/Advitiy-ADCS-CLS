@@ -194,12 +194,20 @@ if (a==arr4).all():
 else:
 	print ("setggDisturbance_b or getggDisturbance_b incorrect")
 
-Sat4.setControl_b(state1)
+Sat4.setControl_b(arr1)
+Sat4.setAppControl_b(arr2)
+
 a=Sat4.getControl_b()
-if (a==state1).all():
+if (a==arr1).all():
 	print ("setControl and getControl correct")
 else:
 	print ("setControl and getControl incorrect")
+
+a=Sat4.getAppControl_b()
+if (a==arr2).all():
+	print ("setAppControl and getAppControl correct")
+else:
+	print ("setAppControl and getAppControl incorrect")
 
 Sat4.setSun_i(w)
 sv_i=Sat4.getSun_i()
