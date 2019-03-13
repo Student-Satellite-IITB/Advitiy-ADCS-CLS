@@ -1,7 +1,6 @@
 from constants_1U import *
 import frames as fs
 import numpy as np
-from numpy import nultivariate_normal as mvg
 import qnv
 
 def ADC(sun_vector):
@@ -11,7 +10,7 @@ def ADC(sun_vector):
     #sunsensor gain : multiplying factor that converts dot product of sunvector with normal to voltage
     #output : 6 voltages, 1 per sunsensor
     
-    u=1/(SS_QUANTIZER-1)
+    u=1/(SS_QUANTIZER-1) #Reference for this
 
     m_normalVectors = np.zeros([6,3]) #matrix of normal vectors of sensors
     #S1 and S2 are opposite, S3 and S4 are opposite, S5 and S6 are opposite
@@ -31,7 +30,7 @@ def ADC(sun_vector):
         v=(u)*(round(v/u))*SS_GAIN #conversion from dot product to voltage
         v_output[iter] = v
 
-    v_output = v_output + mvg(ADC_BIAS,ADC_COV) #add error to true quantity
+    v_output = v_output + np.random.multivariate_normal(ADC_BIAS,ADC_COV) #add error to true quantity
 
     return v_output
 
@@ -81,9 +80,9 @@ def calc_SV(ss):
 
 def sunsensor(sat):
 
-    v_q_BO = sat.getQ_BO()    
-    v_s_o = sat.getSun_o() #obtain sunvector in orbit frame
-    v_s_b = qnv.quatRotate(v_q_BO,v_s_o) #obtain sunvector in body frame
+    v_q_BI = sat.getQ_BI()    
+    v_s_i = sat.getSun_i() #obtain sunvector in orbit frame
+    v_s_b = qnv.quatRotate(v_q_BI,v_s_i) #obtain sunvector in body frame
     ss_read = ADC(v_s_b) #find reading per sunsensor, error already incorporated in ADC code
     v_sun_b_m = calc_SV(ss_read) #calculate sunvector from sunsensor readings
 
@@ -101,9 +100,9 @@ def GPS(sat):
     time = sat.getTime()
 
     #add errors to true quantities
-    v_pos_m = v_pos + mvg(GPS_POS_BIAS,GPS_POS_COV)
-    v_vel_m = v_vel + mvg(GPS_VEL_BIAS,GPS_VEL_COV)
-    time_m = time + mvg(GPS_TIME_BIAS,GPS_TIME_COV)
+    v_pos_m = v_pos + np.random.multivariate_normal(GPS_POS_BIAS,GPS_POS_COV)
+    v_vel_m = v_vel + np.random.multivariate_normal(GPS_VEL_BIAS,GPS_VEL_COV)
+    time_m = time + np.random.multivariate_normal(GPS_TIME_BIAS,GPS_TIME_COV)
 
     return np.hstack([v_pos_m,v_vel_m,time_m])
 
@@ -112,16 +111,16 @@ def magnetometer(sat):
     #input : satellite class object
     #output : measured magnetic field
 
-    v_q_BO = sat.getQ_BO() 
-    v_B_o = sat.getMag_o() #obtain magnetic field in orbit frame
-    v_B_b = qnv.quatRotate(v_q_BO,v_B_o) #obtain magnetic field in body frame
-    v_B_m = v_B_b + mvg(MAG_BIAS,MAG_COV) #add errors
+    v_q_BI = sat.getQ_BI() 
+    v_B_i = sat.getMag_i() #obtain magnetic field in orbit frame
+    v_B_b = qnv.quatRotate(v_q_BI,v_B_i) #obtain magnetic field in body frame
+    v_B_m = v_B_b + np.random.multivariate_normal(MAG_BIAS,MAG_COV) #add errors
     return v_B_m
     
 def gyroscope(sat):
 
     v_w_BIB = sat.getW_BI_b()
     v_bias_var = sat.getGyroVarBias()
-    v_w_BIB_m = v_w_BIB + v_bias_var + mvg(GYRO_F_BIAS,GYRO_F_COV)
+    v_w_BIB_m = v_w_BIB + v_bias_var + np.random.multivariate_normal(GYRO_F_BIAS,GYRO_F_COV)
 
     return v_w_BIB_m

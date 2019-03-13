@@ -101,21 +101,22 @@ SS_QUANTIZER = 3
 SS_THRESHOLD = 0.5
 
 ADC_BIAS = np.array([0,0,0,0,0,0])
-ADC_COV = np.array([0,0,0,0,0,0])
+ADC_COV = 0.01*np.identity(6)
+
 #GPS (random values)
-GPS_POS_COV = np.array([0,0,0])
-GPS_VEL_COV = np.array([0,0,0])
-GPS_TIME_COV = np.array([0,0,0])
 GPS_POS_BIAS = np.array([0,0,0])
 GPS_VEL_BIAS = np.array([0,0,0])
-GPS_TIME_BIAS = 0
+GPS_TIME_BIAS = np.array([0])
+GPS_POS_COV = np.identity(3)
+GPS_VEL_COV = np.identity(3)
+GPS_TIME_COV = np.array([[0]])
 
 #Magnetometer (random values)
 MAG_BIAS = np.array([0,0,0])
-MAG_COV = np.array([0,0,0])
+MAG_COV = 1e-9*np.identity(3)
 
 #Gyroscope (random values)
 GYRO_F_BIAS = np.array([0,0,0])
-GYRO_F_COV = np.array([0,0,0])
+GYRO_F_COV = 1e-9*np.identity(3)
 
 k_detumbling = 4*np.pi*(1+sin(radians(Inclination-11)))*Jmin/TimePeriod    #gain constant in B_dot controller (from book by F. Landis Markley)
