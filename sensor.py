@@ -10,7 +10,7 @@ def ADC(sun_vector):
     #sunsensor gain : multiplying factor that converts dot product of sunvector with normal to voltage
     #output : 6 voltages, 1 per sunsensor
     
-    u=1/(SS_QUANTIZER-1) #Reference for this
+    u=1/(SS_QUANTIZER-1)   #quantizier means no. of discrete values between 0 and 1 and u represents the resolution of ADC
 
     m_normalVectors = np.zeros([6,3]) #matrix of normal vectors of sensors
     #S1 and S2 are opposite, S3 and S4 are opposite, S5 and S6 are opposite
