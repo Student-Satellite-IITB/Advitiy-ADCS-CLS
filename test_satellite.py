@@ -286,6 +286,25 @@ if (a==b).all():
 else:
 	print ("getMag_o incorrect")
 
+v_Pos_i=arr1
+v_vel_i=arr2
+J2data=np.hstack((arr1,arr2))
+Sat4.setJ2Data(J2data)
+
+a=Sat4.getSatSun_o()
+b=fs.ecif2orbit(v_Pos_i,v_vel_i,w)
+if (a==b).all():
+	print ("getSatSun_o correct")
+else:
+	print ("getSatSun_o incorrect")
+
+a=Sat4.getSatMag_o()
+b=fs.ecif2orbit(v_Pos_i,v_vel_i,mag_i)
+if (a==b).all():
+	print ("getSatMag_o correct")
+else:
+	print ("getSatMag_o incorrect")
+
 Sat4.setSun_b_m(arr2)
 a=Sat4.getSun_b_m()
 if (a==arr2).all():

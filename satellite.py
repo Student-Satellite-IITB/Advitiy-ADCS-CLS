@@ -99,17 +99,27 @@ class Satellite:
 		self.v_sun_i = v_sv_i.copy()	
 	def getSun_i(self):	#return sun in eci
 		return self.v_sun_i
-	def getSun_o(self):	#get sun vector in orbit
-		v_sun_o = fs.ecif2orbit(self.v_pos_i,self.v_vel_i,self.v_sun_i)
-		return	v_sun_o
 	
 	def setMag_i(self,v_mag_i):	#set mag in eci 
 		self.v_mag_i = v_mag_i.copy()		
 	def getMag_i(self):	#return mag in eci
 		return self.v_mag_i
+	
+	#These two does not represent the situation in satellite where pos and vel will contain error due to noises associated with gps and J2 propagator
+	def getSun_o(self):	#get sun vector in orbit 
+		v_sun_o = fs.ecif2orbit(self.v_pos_i,self.v_vel_i,self.v_sun_i)
+		return	v_sun_o
 	def getMag_o(self):	#return mag in orbit
 		v_mag_o = fs.ecif2orbit(self.v_pos_i,self.v_vel_i,self.v_mag_i)
 		return	v_mag_o
+
+	#These two represent the situation in satellite where pos and vel will contain error due to noises associated with gps and J2 propagator
+	def getSatSun_o(self):	#get sun vector in orbit 
+		v_sat_sun_o = fs.ecif2orbit(self.J2Data[0:3],self.J2Data[3:6],self.v_sun_i)
+		return	v_sat_sun_o
+	def getSatMag_o(self):	#return mag in orbit
+		v_sat_mag_o = fs.ecif2orbit(self.J2Data[0:3],self.J2Data[3:6],self.v_mag_i)
+		return	v_sat_mag_o
 
 	def setSun_b_m(self,v_sv_b_m):	#set sunsensor measurement in body
 		self.v_sun_b_m = v_sv_b_m.copy()
