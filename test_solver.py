@@ -24,8 +24,8 @@ class TestSolver(unittest.TestCase):
 			updateStateTimeRK4(mySat,f_constant,h)
 			mySat.setTime(t0+(i+1)*h)
 		self.assertTrue(np.allclose([10.0,10.0,10.0],mySat.getW_BO_b()))
-
-	@data(0.001,0.005,0.05,0.1,0.5)	
+		
+	@data(0.001,0.005,0.05,0.1,0.5,1,5,10)	
 	def test_dynamics(self,value):
 		t0 = 0.
 		h = value
@@ -61,6 +61,9 @@ class TestSolver(unittest.TestCase):
 		k4 = h*x_dot_BO(mySat2)
 		
 		error_state = np.hstack((v_q_BO,v_w_BO_b)) + (1./6.)*(k1 + 2.*k2 + 2.*k3 + k4)
+		if (error_state[3]<0):
+			error_state[0:4]=-1*error_state[0:4]
+		error_state[0:4]=error_state[0:4]/np.linalg.norm(error_state[0:4])
 		self.assertTrue(np.allclose(error_state,x1))
 	
 if __name__=="__main__":
