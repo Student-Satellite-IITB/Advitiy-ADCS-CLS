@@ -1,14 +1,16 @@
 import numpy as np
-from sgp4.earth_gravity import wgs72
-from sgp4.io import twoline2rv
-from datetime import *
-from constants_1U import LINE1, LINE2, EPOCH, EQUINOX, R_EARTH, AU, R_SUN, con1U
-import scipy.io as sio
-import frames as fs
 import math
 import matplotlib.pyplot as plt
-import datetime
+from sgp4.earth_gravity import wgs72
+from sgp4.io import twoline2rv
+import scipy.io as sio
 from pyigrf12 import runigrf12
+from datetime import *
+from constants_1U import *
+import frames as fs
+
+
+#getorbitdata.py
 
 satellite = twoline2rv(LINE1, LINE2, wgs72) #wgs72 is a particular model used by sgp4
 
@@ -24,17 +26,12 @@ for i in range (N):
 	sgp_output[i,1:4]=satellite.propagate(time.year,time.month,time.day,time.hour,time.minute,time.second)[0] #Stores the position
 	sgp_output[i,4:7]=satellite.propagate(time.year,time.month,time.day,time.hour,time.minute,time.second)[1] #Stores the velocity, Reshape is necessary to match dimensions
 np.savetxt("sgp_output.csv", sgp_output, delimiter=",") #Saves sgp_output to csv file
-print type(sgp_output)
-print np.shape(sgp_output)
 
-print sgp_output[0,:]
-print sgp_output[3600,:]
-print sgp_output[7200,:]
-print sgp_output[10800,:]
-print sgp_output[14400,:]
 
+
+#sunmodel.py
 '''
-	This code gives sun-vector (unit vector from center of earth to center of sun) in ECI frame.
+	This part of code gives sun-vector (unit vector from center of earth to center of sun) in ECI frame.
 	Input file is sgp data with first column as time series in seconds
 	The report for this code is uploaded on thread : Controls | Environment model - EV_sunmodel-report_01.pdf
 '''
@@ -63,8 +60,10 @@ for i in range (N):
 
 np.savetxt("si_output.csv", m_si_output, delimiter=",") #Saves si_output to csv file
 
+
+#lightmodel.py
 '''
-    This code generates light model output file for given orbit
+    This part of code generates light model output file for given orbit
     Input: orbit data file, sun vector data file
     output: N*2 array data file 
     flag = 0 eclipse
@@ -111,8 +110,10 @@ for i in range(N):
 np.savetxt("light_output.csv", m_light_output, delimiter=',')
 
 
+
+#getLLA.py
 '''
-	This code generates csv file for latitude, longitude, altitude (LLA) corresponding to time data.
+	This part of code generates csv file for latitude, longitude, altitude (LLA) corresponding to time data.
 	ECI frame position is provided from sgp_output.csv
 		Time: (since epoch) in seconds
 		latitude: -90 to 90 degrees
@@ -144,9 +145,10 @@ for k in range(0,N):
 np.savetxt('LLA.csv',m_LLA, delimiter=",")
 print("LLA done")
 
+#m_mag_ned.py
 
 '''
-	This code takes latitude, longitude and altitude (LLA) corresponding to time data as input.
+	This part of code takes latitude, longitude and altitude (LLA) corresponding to time data as input.
 		Time: (since epoch) in seconds
 		latitude: -90 to 90 degrees
 		longitude: -180 to 180 degrees (-180 excluded)
@@ -171,9 +173,9 @@ for i in range(N):
     lon = lla[i, 2]
     height = lla[i, 3] * 0.001 # converting altitude to km
     elapsed_t = lla[i, 0]
-    e_t = datetime.timedelta(seconds = elapsed_t)
+    e_t = timedelta(seconds = elapsed_t)
 
-    dt = con1U.EPOCH + e_t     #present time is time of epoch + time elasped from EPOCH
+    dt = EPOCH + e_t     #present time is time of epoch + time elasped from EPOCH
 
     B = runigrf12(dt, z1, z2, height, lat, lon) #calling the standard function "igrf-12" which needs datetime, flag (z1 and z2) and  altitude (in km), latitude and longitude
     
@@ -183,8 +185,10 @@ for i in range(N):
 np.savetxt('mag_output_ned.csv',m_mag_ned, delimiter=",")  #saving the matrix
 print ("NED frame magnetic field in nano-tesla")
 
+#m_mag_eci.py
+
 '''
-	This code takes magnetic field in North-East-Down (NED) frame (in nT) and 
+	This part of code takes magnetic field in North-East-Down (NED) frame (in nT) and 
 	transforms it to ECI frame.
 	Output - magnetic field in ECI Frame in nanoTesla.
 '''
