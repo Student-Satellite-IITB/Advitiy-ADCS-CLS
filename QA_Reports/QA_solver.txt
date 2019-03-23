@@ -1,0 +1,95 @@
+﻿Quality Assurance Report
+solver.py
+
+
+QA requested by: Riya
+Date:        11/8/2018
+Reviewer: Anant Joshi
+Permanent links:        1.https://github.com/Student-Satellite-IITB/Advitiy-Control-Model/blob/1122f445fc631178a286c44772063b5594e707f8/solver.py
+        2.https://github.com/Student-Satellite-IITB/Advitiy-Control-Model/blob/1122f445fc631178a286c44772063b5594e707f8/RM_solver_02.pdf
+        3.https://github.com/Student-Satellite-IITB/Advitiy-Control-Model/blob/046ea6d0b318cac7aed47ca78d610763129a9db9/test_solver.py
+
+
+QA suggestions:
+1. Add angular velocity of orbit wrt inertia in constants file
+2. Add functions in satellite class for quaternion from body to orbit and angular velocity of body wrt orbit in body
+
+
+Implementation:
+1. First suggestion is implemented
+2. Second suggestion is not required as now those are part of state.
+
+
+QA requested by: Riya
+Date:        27/8/2018
+Reviewer: Anant Joshi
+Permanent links:        1.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/solver.py
+2.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/test_solver.py
+3.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/RM_solver_03.pdf
+
+
+QA suggestions:
+1. Test cases failed due to old version of frames. Test cases passed on updating frames. 
+
+
+Implementation:
+1. Solution of Suggestion 1 is being searched
+
+
+Post QA permanent links:
+1.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/solver.py
+2.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/test_solver.py
+3.https://github.com/rsriya/Advitiy-Control-Model/blob/156e8fdf8818efce71f6bd769c249b561c2f9e9e/RM_solver_03.pdf
+------------------------------------------------------------------------------------------------------------------
+QA requested by: Riya
+Date:        29/9/2018
+Reviewer: Anant Joshi
+Permanent links:        
+1.  https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/solver.py
+2. https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/test_solver.py
+3. https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/README/RM_solver_04.pdf 
+QA suggestions:
+1. Change links above
+
+
+Implementation:
+1. Links corrected.
+
+
+Post-QA Permanent Links:
+1. https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/solver.py
+2. https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/test_solver.py
+3. https://github.com/rsriya/Advitiy-Control-Model/blob/detumbling/README/RM_solver_04.pdf 
+
+
+------------------------------------------------------------------------------------------------------------------
+QA requested by: Riya
+Date:        25/10/2018
+Reviewer: Sanket Chirame
+Permanent links:        https://github.com/rsriya/Advitiy-ADCS-CLS/blob/e591f47ddc42f93d25922338cc19b198cda0fdd7/solver.py 
+https://github.com/rsriya/Advitiy-ADCS-CLS/blob/e591f47ddc42f93d25922338cc19b198cda0fdd7/test_solver.py 
+
+
+QA_suggestions:
+1. The link for Runge-Kutta reference in the manual is broken.
+2. In the comment it appears that the ‘f’ is a variable containing the derivative of the state. It should be “ f : The function returning the derivative of the state given satellite object as its input”
+3. If the derivative function f has explicit time dependance, this routine fails. As given in the manual the satellite.setTime() also has to be incremented by (h/2) at each step. Eg. For calculation of k2; first do sat.setTime(t0+h/2).
+4. Imports from constants and frames files are unnecessary.
+5. Function description says that the rk4Quaternion returns the next state variable whereas the next state is updated within the function itself returning None. Resolve this ambiguity by changing the description and accordingly modify the manual.
+6. If updates are done within the function give it more suggestive name. Eg. updateStateTimeRK4( ) 
+7. Caveat about updates within function: According to 3, if the time is being updated within the function then there is risks of multiple time increments. Eg. It has to be ensured that the main routine doesn’t do setTime(t+h) again.
+8. There should be a reference for the step of flipping the quaternion in case of negative scalar component.
+9. Test_constant: This test shows that even if derivative is scalar there won’t be an error since numpy will add f equally to all the components of the state. I think there should be check in the function to ensure that f returns variable with proper dimensions.
+10. Test_dynamics: The test fails for arbitrarily large h which should not be the case since both result and expected value are calculated using same method. In line 51-58 the calculation of k3,k4 is erroneous. This test should be considered passed only when it works for any value of “h”.
+11. Frames code along with this repo has indentation error in last line.
+
+
+Implementation:
+1. Suggestion 1 will be implemented by Anant.
+2. Suggestion 11 - frames.py in this repo is not QAed - I added it in this branch so that you can run the code.
+3. All other suggestions has been implemented.
+
+
+Post-QA Permanent Links:
+1. https://github.com/rsriya/Advitiy-ADCS-CLS/blob/fcf43b088962da41597478a9bcd6fa43787e03a2/solver.py
+2. https://github.com/rsriya/Advitiy-ADCS-CLS/blob/fcf43b088962da41597478a9bcd6fa43787e03a2/test_solver.py
