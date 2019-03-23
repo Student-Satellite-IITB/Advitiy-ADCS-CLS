@@ -83,8 +83,9 @@ def ecif2orbit(v_pos_i,v_vel_i,v_x_i):
 	return v_x_o
 
 def qBI2qBO(v_q_BI,v_pos_i,v_vel_i):
-	#input: unit quaternion which rotates ecif vector to body frame, position and velocity in ecif
-	#output: unit quaternion which rotates orbit frame vector to body frame
+	#input: Quaternion corresponding to transformation of components of vector in ecif to components in body frame, 
+	#		position and velocity in ecif
+	#output: Quaternion corresponding to transformation of components of vector in orbit frame to components in body frame
 	#Orbit frame def:	z_o = nadir(opposite to satellite position vector) y_o: cross(v,r) x_o: cross(y,z) 
 
 	z = -v_pos_i/np.linalg.norm(v_pos_i)
@@ -100,8 +101,9 @@ def qBI2qBO(v_q_BI,v_pos_i,v_vel_i):
 	return v_q_BO
 
 def qBO2qBI(v_q_BO,v_pos_i,v_vel_i):
-	#input: Unit quaternion which rotates orbit frame vector to body frame, position and velocity in ecif
-	#output: Unit quaternion which rotates ecif vector to body frame
+	#input: Quaternion corresponding to transformation of components of vector in orbit frame to components in body frame, 
+	#		position and velocity in ecif
+	#output: Quaternion corresponding to transformation of components of vector in ecif to components in body frame
 	#Orbit frame def:	z_o = nadir(opposite to satellite position vector) y_o: cross(v,r) x_o: cross(y,z)
 	z = -v_pos_i/np.linalg.norm(v_pos_i)
 	y = np.cross(v_vel_i,v_pos_i)/np.linalg.norm(np.cross(v_vel_i,v_pos_i))
@@ -121,9 +123,6 @@ def wBIb2wBOb(v_w_BI_b,v_q_BO,v_w_IO_o):
 	#output: angular velocity of body frame wrt orbit frame in body frame
 	
 	return v_w_BI_b + qnv.quatRotate(v_q_BO,v_w_IO_o)
-
-
-
 
 def ned2ecef(v,lat,lon):
 	#rotate vector from North-East-Down frame to ecef
@@ -155,3 +154,4 @@ def wBOb2wBIb(v_w_BO_b,v_q_BO,v_w_IO_o):
 	#output: angular velocity of body frame wrt eci frame in body frame
 	
 	return v_w_BO_b - qnv.quatRotate(v_q_BO,v_w_IO_o)
+

@@ -136,17 +136,40 @@ class Test_qBI_2qBO(unittest.TestCase):
 		self.assertTrue(np.allclose(qnv.quatInv(expectedInv) ,result))
 
 class Test_qBO_2qBI(unittest.TestCase):	
+
+	def test_south_pole_ideal(self):
+		#above south pole, body frame, orbit frame and eci frame have same attitude wrt each other 
+		r = np.array([0.,0.,-7.07e6])
+		v = np.array([7.0e3,0.,0.])
+		qBI = np.array([1.,0.,0.,0.])
+		qBO = np.array([1.,0.,0.,0.])
+		result = fr.qBO2qBI(qBO,r,v)
+		self.assertTrue(np.allclose(qBI ,result))	
+
 	def test_data2(self):
 		qOB = (0.5/np.sqrt(2.))*np.array([np.sqrt(3.),np.sqrt(3.),1.,1.])
 		r = np.array([0.,0.,7.07e6])
 		v = np.array([0.,7.0e3,0.])
 		qIB = 0.5 * np.array([0,-1,0,np.sqrt(3)])
-		result = fr.qBO2qBI(qnv.quatInv(qIB),r,v)
-		
-		self.assertTrue(np.allclose(qnv.quatInv(qOB) ,result))
-		
+		result = fr.qBO2qBI(qnv.quatInv(qOB),r,v)		
+		self.assertTrue(np.allclose(qnv.quatInv(qIB) ,result))
+	
+	def test_data3(self):
+		r = 1/3 * np.array([7.07e6,7.07e6,7.07e6])
+		v = np.array([0.,1/2**(1/2),1/2**(1/2)])
+		qOB = (0.5/np.sqrt(2.))*np.array([np.sqrt(3.),np.sqrt(3.),1.,1.])
+		qBI = np.array([ -0.32227667, 0.74698487, 0.43819357, 0.38227967])
+		#m_OI = -1 * np.array(((2**(1/2)/9, -1/(9*2**(1/2)), -1/(9*2**(1/2))),(0, -1/(3*2**(1/2)), 1/(3*2**(1/2))),(1/3**(1/2), 1/3**(1/2), 1/3**(1/2))))
+		#q_OI = qnv.quatMultiplyNorm(qnv.quatInv(qOB),qnv.rotm2quat(m_A)) = [-0.1159169  -0.88047624  0.3647052   0.27984814]
+
+		result = fr.qBO2qBI(qnv.quatInv(qOB),r,v)	
+		print(result)	
+		self.assertTrue(np.allclose(qBI ,result))
+
+	
 @ddt
 class Test_wBIB_2_wBOB(unittest.TestCase):
+
 	def test_ideal_controlled(self):
 		v_w_IO_o = np.array([0.,0.00106178,0.])
 		qBO = np.array([1.,0.,0.,0.])
@@ -182,5 +205,6 @@ class Test_wBOB_2_wBIB(unittest.TestCase): #These test cases are made by reversi
 		result = fr.wBOb2wBIb(w_BOB,qBO,v_w_IO_o)
 		expected = np.array([0.,0.,0.])
 		self.assertTrue(np.allclose(result,expected)) 
+
 if __name__=='__main__':
 	unittest.main(verbosity=2)
