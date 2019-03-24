@@ -9,17 +9,6 @@ def ADC(sun_vector):
     #input: sun vector in body frame, normal vectors of each sunsensor, sunsensor gain, quantizer
     #sunsensor gain : multiplying factor that converts dot product of sunvector with normal to voltage
     #output : 6 voltages, 1 per sunsensor
-    
-    u=1/(SS_QUANTIZER-1)   #quantizier means no. of discrete values between 0 and 1 and u represents the resolution of ADC
-
-    m_normalVectors = np.zeros([6,3]) #matrix of normal vectors of sensors
-    #S1 and S2 are opposite, S3 and S4 are opposite, S5 and S6 are opposite
-    m_normalVectors[0,:] = v_S1
-    m_normalVectors[1,:] = v_S2
-    m_normalVectors[2,:] = v_S3
-    m_normalVectors[3,:] = v_S4
-    m_normalVectors[4,:] = v_S5
-    m_normalVectors[5,:] = v_S6
 
     v_output = np.zeros([6]) #vector of output of each sensor
 
@@ -73,8 +62,7 @@ def calc_SV(ss):
               if ss[m]>=ss[m+1]:
                     v_sun_m[n]=1.0*ss[m] 
               else:
-                 v_sun_m[n]=-1.0*ss[m+1]
-       
+                v_sun_m[n]=-1.0*ss[m+1]
     return v_sun_m/np.linalg.norm(v_sun_m)       #gives the unit sun vector to be used in quest.    
 
 
@@ -103,7 +91,7 @@ def GPS(sat):
     v_pos_m = v_pos + np.random.multivariate_normal(GPS_POS_BIAS,GPS_POS_COV)
     v_vel_m = v_vel + np.random.multivariate_normal(GPS_VEL_BIAS,GPS_VEL_COV)
     time_m = time + np.random.multivariate_normal(GPS_TIME_BIAS,GPS_TIME_COV)
-
+    
     return np.hstack([v_pos_m,v_vel_m,time_m])
 
 def magnetometer(sat):
