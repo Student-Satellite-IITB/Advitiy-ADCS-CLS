@@ -1,0 +1,57 @@
+﻿Quality Assurance Report
+Sensor.py
+
+
+QA requested by: Anant Joshi
+Date:        5/10/2018
+Reviewer: Riya
+Permanent links:        1.https://github.com/anantjoshi97/Advitiy-Control-Model/blob/master/satellite.py 
+
+
+QA suggestions:
+1. Add the convention of sunsensor in comment (i.e. S1 and S2 are sunsensors opposite to each-other)
+2. Run code yourself once to check for compilation error.
+3. Line 1 - constants_1U
+4. Line 4 - nultivariate_normal is imported but never used
+5. Line 13 - instead of declaring SS_Quantizier as constant declare u as constant (algebra of obtaining u from SS_Quantizier not known by sensor modeller and even not expected - value should be supplied by sensor hardware person)
+6. Test cases for ADC were not correct
+7. One test-case for calc_SV is wrong.
+8. Line 23 - declare it as 1D array else get syntax error in line 45
+9. Line 29 - use round instead of int because numerical errors will cause the result to deviate by large amount
+10. Line 31 -         v_output[iter] = v
+11. Line 32 - error should not be constant
+12. Line 87 - input vector should be in inertial frame
+13. Line 94 - It should be v_sun_b_m
+14. Line 107-109 - Errors should not be taken as constant 
+15. Line 107-108 - v_pos and v_vel instead of pos and vel
+16. Line 119 - input vector should be in inertial frame
+17. MAG_BIAS should not be declared as constant. It should be random noise. 
+18. In gyroscope modelling, random noise is not include. What about Piyush code?
+Implementation:
+Implementation done
+Post-QA permanent links:
+https://github.com/anantjoshi97/Advitiy-Control-Model/blob/2446411a23c971ed13fdabb7fd541bdaeb78f457/sensor.py
+
+
+----------------------------------------------------------------------------------------
+QA requested by: Riya
+Date:        13/3/19
+Reviewer: Anant Joshi
+Permanent links:        1.https://github.com/rsriya/Advitiy-ADCS-CLS/blob/0f5372e5dfd7f52cec57df3b2071a36b3a3586e7/sensor.py 
+2.https://github.com/rsriya/Advitiy-ADCS-CLS/blob/0f5372e5dfd7f52cec57df3b2071a36b3a3586e7/test_sensor.py 
+QA suggestions:
+1. Declare u in constants and give a good explanation in CLS manual
+2. Declare m_normalvectors in constants itself, to save time
+3.  Give complete explanation of line 30 in either code or manual (and if in manual refer to manual in code)
+4. Keep the return in line 78 under the if in line 70
+5. Test code failed
+
+
+QA implementations:
+1. 5 - Please read the instruction of running in the test-code. (in the starting of code, after import of files)
+2. All other suggestions have been implemented
+
+
+Post QA-Permalinks:
+1. https://github.com/rsriya/Advitiy-ADCS-CLS/blob/025bf197910629df6a90b2ab0cfa68f4e8165da0/test_sensor.py
+2. https://github.com/rsriya/Advitiy-ADCS-CLS/blob/025bf197910629df6a90b2ab0cfa68f4e8165da0/sensor.py
