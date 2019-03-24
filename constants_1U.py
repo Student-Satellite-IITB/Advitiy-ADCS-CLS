@@ -96,26 +96,37 @@ v_S4 = np.array([0,-1,0])
 v_S5 = np.array([0,0,1])
 v_S6 = np.array([0,0,-1])
 
+m_normalVectors = np.zeros([6,3]) #matrix of normal vectors of sensors
+#S1 and S2 are opposite, S3 and S4 are opposite, S5 and S6 are opposite
+m_normalVectors[0,:] = v_S1
+m_normalVectors[1,:] = v_S2
+m_normalVectors[2,:] = v_S3
+m_normalVectors[3,:] = v_S4
+m_normalVectors[4,:] = v_S5
+m_normalVectors[5,:] = v_S6
+
 SS_GAIN = 1
 SS_QUANTIZER = 3
 SS_THRESHOLD = 0.5
+u=1/(SS_QUANTIZER-1)   #quantizier means no. of discrete values between 0 and 1 and u represents the resolution of ADC
 
 ADC_BIAS = np.array([0,0,0,0,0,0])
-ADC_COV = np.array([0,0,0,0,0,0])
+ADC_COV = 0.01*np.identity(6) 
+
 #GPS (random values)
-GPS_POS_COV = np.array([0,0,0])
-GPS_VEL_COV = np.array([0,0,0])
-GPS_TIME_COV = np.array([0,0,0])
 GPS_POS_BIAS = np.array([0,0,0])
 GPS_VEL_BIAS = np.array([0,0,0])
-GPS_TIME_BIAS = 0
+GPS_TIME_BIAS = np.array([0])
+GPS_POS_COV = np.identity(3) 
+GPS_VEL_COV = np.identity(3) 
+GPS_TIME_COV = np.array([[0]])
 
 #Magnetometer (random values)
 MAG_BIAS = np.array([0,0,0])
-MAG_COV = np.array([0,0,0])
+MAG_COV = 1e-9*np.identity(3) 
 
 #Gyroscope (random values)
 GYRO_F_BIAS = np.array([0,0,0])
-GYRO_F_COV = np.array([0,0,0])
+GYRO_F_COV = 1e-9*np.identity(3) 
 
 k_detumbling = 4*np.pi*(1+sin(radians(Inclination-11)))*Jmin/TimePeriod    #gain constant in B_dot controller (from book by F. Landis Markley)
