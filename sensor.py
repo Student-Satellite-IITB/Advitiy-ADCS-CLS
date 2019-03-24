@@ -16,7 +16,7 @@ def ADC(sun_vector):
         v=np.dot(sun_vector,m_normalVectors[iter,:])
         if v<0:
             v=0  #if v < 0 that means the sunvector is making obtuse angle with the sensor which means the sensor is in dark   
-        v=(u)*(round(v/u))*SS_GAIN #conversion from dot product to voltage
+        v=(u)*(round(v/u))*SS_GAIN                      #refer to manual to understand more
         v_output[iter] = v
 
     v_output = v_output + np.random.multivariate_normal(ADC_BIAS,ADC_COV) #add error to true quantity
