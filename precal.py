@@ -177,9 +177,9 @@ for i in range(N):
     lon = lla[i, 2]
     height = lla[i, 3] * 0.001 # converting altitude to km
     elapsed_t = lla[i, 0]
-    e_t = timedelta(seconds = elapsed_t)
+    e_t = datetime.timedelta(seconds = elapsed_t)
 
-    dt = EPOCH + e_t     #present time is time of epoch + time elasped from EPOCH
+    dt = con1U.EPOCH + e_t     #present time is time of epoch + time elasped from EPOCH
 
     B = runigrf12(dt, z1, z2, height, lat, lon) #calling the standard function "igrf-12" which needs datetime, flag (z1 and z2) and  altitude (in km), latitude and longitude
     
