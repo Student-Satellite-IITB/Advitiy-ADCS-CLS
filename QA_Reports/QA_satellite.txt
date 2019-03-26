@@ -1,0 +1,63 @@
+﻿QA Report of satellite.py
+May 19, 2018
+Code written by: Anant Joshi
+QA performed by: Riya
+Changes made:
+_ In init instead of direct equating time, used setTime()
+_ In setQ instead of [0:3], used [0:4] (as required by python)
+_ Deleted getQi as it was not needed.
+_ Instead of single get/set Mag, I declared get/set Mag p and Mag c because
+for b dot controller we need the derivative of magnetic field and so we need
+both current and previous magnetic fields.
+_ Declared getW because a function setW was declared.
+
+
+----------------------------------------------------------------------------------------------------------------------------
+QA Requested by: Riya Singh
+Date: 20/09/2018
+Reviewer: Ravit Anand
+Permanent links: https://github.com/Student-Satellite-IITB/Advitiy-Control-
+Model/blob/f8d44f7ddac4695a63a2a30302147a8288ea18e8/satellite.py
+QA suggestions:
+1. Line 37, the function setQ sets the exact quaternion from body frame to
+inertial frame. Thus, the name of the function should reflect that i.e. name
+of the function could be setQ_BI. Also, change the comments accordingly to
+“set exact quaternion from body frame to inertial frame”.
+2. Line 44,47 Change the comments to explain which quaternion you are
+referring to.
+3. Line 47 the variable name v_w doesn’t look appropriate for quaternion,
+perhaps it should be v_q.
+4. Line 51 the variable name v_q doesn’t look appropriate for angular velocity,
+perhaps it should be v_w. Also, change the comments accordingly to
+“set exact angular velocity of body with respect to orbit expressed in body
+frame”.
+5. Line 55 Change comments accordingly.
+6. Line 129 Add comments “get exact angular velocity of body frame with
+respect to inertial frame expressed in body frame”
+7. Line 132 Add comments describing the function fs.wBOb2wBIb and
+notifying that v_w_IO_o will be imported from constants file.
+Implementation:
+1. Suggestion 1 – QBI means quaternion from inertial frame to body frame
+2. All other suggestions have been implemented.
+--------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+QA requested by: Riya
+Date: 5th March 2019
+Reviewer: Niket Parikh
+Permanent Links: https://github.com/rsriya/Advitiy-ADCS-CLS/blob/e5345c163e5d1fc9c255ef99d258cb02de363008/satellite.py 
+https://github.com/rsriya/Advitiy-ADCS-CLS/blob/e5345c163e5d1fc9c255ef99d258cb02de363008/test_satellite.py 
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+QA requested by: Riya
+Date: 12th March 2019
+Reviewer: Sanskriti Bhanshali
+Permanent links:
+https://github.com/rsriya/Advitiy-ADCS-CLS/blob/4234942238b95311fa4d9ca3724c4f2fec00528a/satellite.py 
+https://github.com/rsriya/Advitiy-ADCS-CLS/blob/b22638c0fc0f30fb2746630cd52043fb0900df51/test_satellite.py 
+
+
+QA suggestion : no changes needed.
