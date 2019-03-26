@@ -72,7 +72,6 @@ np.savetxt("si_output.csv", m_si_output, delimiter=",") #Saves si_output to csv 
     For details of model refer: 
 '''
 
-
 #Read SGP and sun-model data
 m_sgp_output = np.genfromtxt('sgp_output.csv', delimiter=",")
 m_si_output = np.genfromtxt('si_output.csv', delimiter=",")
@@ -99,7 +98,7 @@ for i in range(N):
     #Boolean to store whether satellite is in light or dark. 1 implies satellite is in light.
     if (theta >= np.pi/2 + alpha) & (theta_u <= alpha):
         flag = 0
-    elif (theta >= np.pi/2 - beta)  & (theta_p <= beta):
+    elif (theta >= np.pi/2 - beta)  & (theta_p <= beta): #& (theta_u <= alpha):
         flag = 0.5
     else:
     	flag = 1
