@@ -127,7 +127,7 @@ m_LLA = np.zeros([N,4])
 
 for k in range(0,N):
 	if math.fmod(k,N/100) == 0:
-		print (int(100.*k/N)) 
+		print int(100.*k/N) 
 
 	v_i = m_sgp_output_i[k,1:4]		#iniertial frame position
 	time = m_sgp_output_i[k,0]		#time in sec
@@ -141,8 +141,13 @@ for k in range(0,N):
 	m_LLA[k,0] = time
 	m_sgp_ecef[k,1:4] = v_ecef
 	m_LLA[k,1:4] = np.append(v_latlon,alt)
+
+#save LLA data to file
 np.savetxt('LLA.csv',m_LLA, delimiter=",")
-print("LLA done")
+#save ecef data to the file
+np.savetxt('sgp_ecef.csv',m_sgp_ecef,delimiter=",")
+
+print "LLA done"
 
 #m_mag_ned.py
 
