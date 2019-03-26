@@ -196,7 +196,6 @@ print ("NED frame magnetic field in nano-tesla")
 	transforms it to ECI frame.
 	Output - magnetic field in ECI Frame in nanoTesla.
 '''
-
 m_mag_ned = np.genfromtxt('mag_output_ned.csv',delimiter=",")	#in nT
 m_LLA = np.genfromtxt('LLA.csv',delimiter=",")	#Lat and Lon in degrees and altitude in m (check frames.latlon for details)
 
