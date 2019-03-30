@@ -1,0 +1,26 @@
+﻿Quality Assurance Report
+                                                             appr_actuator.py
+
+QA requested by: Niket 
+Date: 26/01/2019
+Reviewer:Riya Singh
+Permanent links: 
+1. https://github.com/npnike10/Advitiy-Control-Model/blob/e19effc96c415eb8b05816d23e1c9bb0099a0681/appr_actuator.py 
+2. Test code: 
+https://github.com/npnike10/Advitiy-Control-Model/blob/e19effc96c415eb8b05816d23e1c9bb0099a0681/test_appr_actuator.py 
+1. Test cases Type A: https://github.com/npnike10/Advitiy-Control-Model/blob/e19effc96c415eb8b05816d23e1c9bb0099a0681/test-data/test_appr_actuatorTypeA.json 
+2. Test cases Type B: https://github.com/npnike10/Advitiy-Control-Model/blob/e19effc96c415eb8b05816d23e1c9bb0099a0681/test-data/test_appr_actuatorTypeB.json        
+
+QA suggestions:
+   1. Make the output of function as an variable of satellite class
+
+
+Implementation:
+   1. Made the suggested change
+
+
+Post QA Permalink:
+   1. https://github.com/npnike10/Advitiy-Control-Model/blob/8ee7945ca996d4214f1d74035b7722931feb5ba0/appr_actuator.py
+   2. Test code: https://github.com/npnike10/Advitiy-Control-Model/blob/377ceaec0f1966ae97293c73f9be967fb17939c8/test_appr_actuator.py
+   3. Test cases Type A: https://github.com/npnike10/Advitiy-Control-Model/blob/e19effc96c415eb8b05816d23e1c9bb0099a0681/test-data/test_appr_actuatorTypeA.json 
+   4. Test cases Type B: https://github.com/npnike10/Advitiy-Control-Model/blob/e19effc96c415eb8b05816d23e1c9bb0099a0681/test-data/test_appr_actuatorTypeB.json

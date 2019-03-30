@@ -1,0 +1,59 @@
+﻿Quality Assurance Report
+Frames.py =========================================================================================================================== 
+Code written by: Anant Joshi and Sanket Chirame
+QA performed by: Sanket Chirame
+Date of QA: 9/5/2018
+
+
+1. Latlon function:
+a. Changed all numbers to float.
+b. 180 degree longitude was returned as pi instead of 180
+
+
+2. Ecif2ecef:
+a. There was mistake in calculation of time. The variable ‘t’ denotes the time since the launch of satellite. But ecif and ecef frames are aligned at equinox. Thus time from equinox to launch needs to be added in ‘t’
+3. Import statement was importing entire constants file. Changed it to import only required variables.
+4. Added comments for better explanation. 
+
+
+=========================================================================================================================== 
+
+
+QA requested by: Sanket Chirame
+Date:        28/7/2018
+Reviewer: Riya Singh
+Permanent links:        
+1.Code: https://github.com/sanket789/Advitiy-Control-Model/blob/4c71b963f42e339cbf36fada47963bb7b6de1fef/frames.py        
+2.Test-code: https://github.com/sanket789/Advitiy-Control-Model/blob/4c71b963f42e339cbf36fada47963bb7b6de1fef/test_frames.py        
+3.Readme file: https://github.com/sanket789/Advitiy-Control-Model/blob/e6d2aad4cef73717738af751d4c2117fa2cced3c/README/RM_frames_02.pdf
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+QA requested by: Riya Singh
+Date: 20/3/2019
+Reviewer: Sanket Chirame
+Functions QAed: qBI2qBO, qBO2qBI, wBOb2wBIb
+Permanent links:        
+1.Code: https://github.com/rsriya/Advitiy-ADCS-CLS/blob/b371a83d02cec9382ba4c56e62132a923b9fa024/frames.py         
+2.Test-code: https://github.com/rsriya/Advitiy-ADCS-CLS/blob/b371a83d02cec9382ba4c56e62132a923b9fa024/test_frames.py 
+
+
+QA Suggestions:
+1. I think, “v_q_BI : Quaternion corresponding to rotation of ecif frame to body frame” or “v_q_BI : Quaternion corresponding to transformation of components of vector in ecif frame to components in body frame”. Since, the quaternion, in our codes,  is used for frame conversions and not for vector rotation. 
+2. wBOb2wBIb: quatrotate returns the vector directly without fixing the norm of final vector to initial input vector. This can be a potential cause of numerical errors. Also description of quatrotate seems contradictory. The rotation is according to v_q and not about v_x  as an axis of rotation.
+3. Test cases: Change variable names in Test_qBO_2qBI: testdata2. In this case, q_BO should be input and qBI. It works out since q_OI = inv(q_IO) = q_IO in this particular case. I would advise to use q_IO which is not inverse of itself for a better test case.
+4. The manual is not updated for these codes. 
+5. Use line break to avoid horizontal scrolling.
+Implementation:
+1. 1, 3 and 5 have been implemented.
+2. 2 - Made the comment of qnv better. The first change was not necessary.
+3. I will inform Sanskriti regarding 4.
+
+
+
+
+Post-QA Permanent Links:
+1. https://github.com/Student-Satellite-IITB/Advitiy-ADCS-CLS/blob/aa9014c9ee2a81bcdf2e93b6c7ccd357abbcec2c/frames.py
+2. https://github.com/Student-Satellite-IITB/Advitiy-ADCS-CLS/blob/aa9014c9ee2a81bcdf2e93b6c7ccd357abbcec2c/test_frames.py
