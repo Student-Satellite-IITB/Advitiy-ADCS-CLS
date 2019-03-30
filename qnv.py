@@ -36,8 +36,8 @@ def quatMultiplyUnnorm(v_q1,v_q2): #returns quaternion product (product is not a
 	v_q = np.hstack((v_b,a))
 	return v_q
 
-def quatRotate(v_q,v_x): #rotates vector x by quaternion q
-	
+def quatRotate(v_q,v_x): 
+	#Transforms components of vector x in frame A to components in frame B if the input quaternion is q_BA	
 	if np.count_nonzero(v_x) == 0:
 		return v_x
 	v_qi = quatInv(v_q)
