@@ -62,4 +62,19 @@ https://github.com/rsriya/Advitiy-ADCS-CLS/blob/b22638c0fc0f30fb2746630cd52043fb
 
 
 QA suggestion : no changes needed.
+----------------------------------------------------------------------------------------------------------------------------------
 
+Reviewer: Piyush Jirwankar
+Date: 03-04-2019
+
+QA suggestions:
+Line 132 in setOmega_m:
+The gyroscope returns w_BIB and not w_BOB_m 
+Line 135 in getOmega_m:
+Same correction as above
+
+Implementation:
+Both the above changes are implemented.
+
+Post QA Permalinks:
+https://github.com/rsriya/Advitiy-ADCS-CLS/blob/b05d53d85e59e61eb453441f4fb1641fb64691d0/satellite.py
