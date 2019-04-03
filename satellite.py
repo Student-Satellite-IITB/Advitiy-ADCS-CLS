@@ -132,11 +132,11 @@ class Satellite:
 	def getQUEST(self):	#return quest quaternon
 		return self.quatEstimate
 
-	def setOmega_m(self,omega_m): 
-		self.v_w_BO_b_m = omega_m.copy()
+	def setOmega_m(self,omega_m): #set the measurement of gyroscope (w_BI_b)
+		self.v_w_BI_b_m = omega_m.copy()
 
-	def getOmega_m(self):
-		return self.v_w_BO_b_m
+	def getOmega_m(self):         #get the measurement of gyroscope (w_BI_b)
+		return self.v_w_BI_b_m
 
 	def setLight(self,flag):
 		self.light = flag
