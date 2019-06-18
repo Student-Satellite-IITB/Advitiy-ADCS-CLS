@@ -1,0 +1,42 @@
+Quality Assurance Report
+TLE2OrbitElements.py
+OrbitElements2TLE.py
+test_OrbitElements2TLE.py
+QA requested by: Sumit Agrawal
+Date: 24/6/2018
+Reviewer: Piyush Jirwankar
+Permanent links:
+1. https://github.com/sumitPhD/Advitiy-Control-Model/blob/master/TLE2OrbitElements.py 2.https://github.com/sumitPhD/Advitiy-Control-Model/blob/master/test_OrbitElements2TLE.py
+3. https://github.com/sumitPhD/Advitiy-Control-Model/blob/master/OrbitElements2TLE.py
+
+
+QA of OrbitElements2TLE.py
+
+Line 32: DDMeanMotion ranges from 45:52. That means from index [44:52] which is wrong in the code.
+Ans : The changes has been implemented.
+QA of TLE2OrbitElements.py
+Same error as above in TLE2OrbitElements.py
+Ans : The changes has been implemented
+In line 34 and line 37, why have we equating DMeanMotion and DDMeanMotion to those values and not taking data from TLE ???
+Ans: It was done for the testing. Now the code is such that those values are taking from TLE.
+
+
+QA requested by: Sumit Agrawal
+Date: 19/3/2018
+Reviewer: Riya
+Permanent links:
+https://github.com/sumitPhD/Advitiy-Control-Model/blob/8c60ddd56934f147becf6f04d717c307eadb733a/unpack%20the%20folder%20to%20upload/All%20sgp%20files/TLE2OrbitElements.py 
+
+QA Suggestions:
+Line 22 - There should be multiplication with two too.
+Line 26 - There should be multiplication with six too.
+Line 37 - There should be a multiplication with 10^(-5)
+
+Implementation:
+All changes are implemented.
+
+Post QA permalink:
+https://github.com/MayuBhattu/Advitiy-ADCS-CLS/blob/a367d3c4a47937a214e7a396c54b2bacc14e9493/TLE2OrbitElements.py
+
+
+
