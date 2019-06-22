@@ -2,6 +2,7 @@ import satellite as Sat
 import numpy as np
 import qnv
 import frames as fs
+learning = 5
 
 state1=np.array([1,0,0,0,10,0,0,0]) 
 state2=np.array([2,0,0,0,20,0,0,0])
