@@ -1,0 +1,22 @@
+﻿Quality Assurance Report
+precal.py
+
+
+QA requested by: Mayuresh
+Date:        19/3/2018
+Reviewer: Riya
+Permanent links:        1.https://github.com/rsriya/Advitiy-ADCS-CLS/blob/846ba02d2a1a0a37471221fec0c393c7aff86cfd/precal.py         
+
+
+QA suggestions:
+1. Code for getOrbitData has been modified while the one in precal is older version. Add the one present in this. https://docs.google.com/document/d/1Vj5ApI37VaUay2J0VR9UF4izelcLdOmI0dCdBzRfogU/edit 
+2. Code for getLLA is also the preQA version - (QAed version https://github.com/sanket789/Advitiy-Control-Model/blob/6baa3df8c348b97a400a4523572f737be5c68b62/getLLA.py )
+3. Post-QA permanent links:        1.
+        https://github.com/sanskritibhansali/Advitiy-Control-Model/blob/2e8fdba1f86917bac590271c94a55469261ba931/precal.py
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
