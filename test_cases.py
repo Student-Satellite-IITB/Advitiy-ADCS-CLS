@@ -10,12 +10,12 @@ CONTROL_STEP = 2.0	#control cycle time period in second
 # boolean determining whether satellite in SSO or PO
 # 1 means SSO
 # 0 means PO
-orbitbool = 1
+orbitbool = 0
 
 # boolean determining whether disturbance will act or not
 # 1 means disturbance present
 # 0 means disturbance absent
-distbool = 0
+distbool = 1
 
 # boolean determining whether sensor modelling will be used or not
 # 1 means sensor-modelling present

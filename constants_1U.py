@@ -57,8 +57,8 @@ Ixy = 0.00000437
 Iyz = - 0.00000408
 Ixz = 0.00000118
 
-m_INERTIA = np.array([[Ixx, Ixy, Ixz], [Ixy, Iyy, Iyz], [Ixz, Iyz, Izz]])	#actual inertia
-#m_INERTIA = np.array([[1.0,0.,0.],[0.,1.,0.],[0.,0.,1.]])	#identity inertia
+#m_INERTIA = np.array([[Ixx, Ixy, Ixz], [Ixy, Iyy, Iyz], [Ixz, Iyz, Izz]])	#actual inertia
+m_INERTIA = np.array([[1.0,0.,0.],[0.,1.,0.],[0.,0.,1.]])	#identity inertia
 
 m_INERTIA_inv = np.linalg.inv(m_INERTIA)	#inverse of inertia matrix
 J=np.linalg.eig(m_INERTIA)
@@ -72,7 +72,7 @@ v_Az = np.array([0.,0.,0.01])	#area vector perpendicular to z-axis in m^2
 INDUCTANCE = 68e-3	#Inductance of torquer in Henry
 RESISTANCE = 107.0	#Resistance of torquer	in Ohm
 PWM_AMPLITUDE = 3.3	#PWM amplitude in volt
-PWM_FREQUENCY = 1e3 #frequency of PWM signal 
+PWM_FREQUENCY = 1e3 #frequency of PWM signal
 No_Turns=450        #No. of turns of torquer
 v_A_Torquer = np.array([0.0049,0.0049,0.0049])	#area vector of torquers in m^2
 
@@ -85,7 +85,7 @@ AERO_DRAG = 2.2
 RHO = 0.218e-12
 
 MODEL_STEP=0.1
-CONTROL_STEP = 2.0	#control cycle time period in second
+CONTROL_STEP = 0.1	#control cycle time period in second
 FREQ = 1e3 	#frequency of duty cycle in Hz
 
 #Sunsensor (random values)
@@ -96,26 +96,45 @@ v_S4 = np.array([0,-1,0])
 v_S5 = np.array([0,0,1])
 v_S6 = np.array([0,0,-1])
 
+#-----Values of Orbital Constants being assigned-----
+MU = 398600.4415
+J2 = 1.082635854e-3
+v_w_ei_i = np.array([0,0,7.2921156e-5]) #Radians/sec angularvelocity of earth
+C_DRAG = 2
+AREA = 0.01 #In m^3 Cross section area
+B_COEFF = (C_DRAG*AREA)/MASS_SAT #Drag coeff
+
+m_normalVectors = np.zeros([6,3]) #matrix of normal vectors of sensors
+#S1 and S2 are opposite, S3 and S4 are opposite, S5 and S6 are opposite
+m_normalVectors[0,:] = v_S1
+m_normalVectors[1,:] = v_S2
+m_normalVectors[2,:] = v_S3
+m_normalVectors[3,:] = v_S4
+m_normalVectors[4,:] = v_S5
+m_normalVectors[5,:] = v_S6
+
 SS_GAIN = 1
 SS_QUANTIZER = 3
 SS_THRESHOLD = 0.5
+u=1/(SS_QUANTIZER-1)   #quantizier means no. of discrete values between 0 and 1 and u represents the resolution of ADC
 
 ADC_BIAS = np.array([0,0,0,0,0,0])
-ADC_COV = np.array([0,0,0,0,0,0])
+ADC_COV = 0.01*np.identity(6)
+
 #GPS (random values)
-GPS_POS_COV = np.array([0,0,0])
-GPS_VEL_COV = np.array([0,0,0])
-GPS_TIME_COV = np.array([0,0,0])
 GPS_POS_BIAS = np.array([0,0,0])
 GPS_VEL_BIAS = np.array([0,0,0])
-GPS_TIME_BIAS = 0
+GPS_TIME_BIAS = np.array([0])
+GPS_POS_COV = np.identity(3)
+GPS_VEL_COV = np.identity(3)
+GPS_TIME_COV = np.array([[0]])
 
 #Magnetometer (random values)
 MAG_BIAS = np.array([0,0,0])
-MAG_COV = np.array([0,0,0])
+MAG_COV = 1e-9*np.identity(3)
 
 #Gyroscope (random values)
 GYRO_F_BIAS = np.array([0,0,0])
-GYRO_F_COV = np.array([0,0,0])
+GYRO_F_COV = 1e-9*np.identity(3)
 
 k_detumbling = 4*np.pi*(1+sin(radians(Inclination-11)))*Jmin/TimePeriod    #gain constant in B_dot controller (from book by F. Landis Markley)
