@@ -38,16 +38,16 @@ count = 0  # to count no. of transitions from light to eclipses
 init, end = 1, 0
 '''
 for k in range(0,len(m_light_output_temp)-2): #we go to k=length-2 only because maximum index for an array is length-1 and l2 = aaray[k+1]
-	#obtain index corresponding to the start of eclipse
-	l1 = m_light_output_temp[k,1]
-	l2 = m_light_output_temp[k+1,1]
-	if l1 ==1 and l2 == 0.5 and count == 0:	#start of first eclipse
-		init = k
-		count = 1
+    #obtain index corresponding to the start of eclipse
+    l1 = m_light_output_temp[k,1]
+    l2 = m_light_output_temp[k+1,1]
+    if l1 ==1 and l2 == 0.5 and count == 0:    #start of first eclipse
+        init = k
+        count = 1
 
-	elif l1==1 and l2==0.5 and count == 1:	#start of second eclipse
-		end = k 
-		break
+    elif l1==1 and l2==0.5 and count == 1:    #start of second eclipse
+        end = k 
+        break
 '''
 end = init + 60000
 # define simulation parameters
@@ -57,7 +57,7 @@ end = init + 60000
 
 t0 = m_sgp_output_temp_i[init, 0]
 tf = m_sgp_output_temp_i[end, 0]  # tf-t0 represents simulation time in seconds
-h = 1/PWM_FREQUENCY/50  # step size of integration in seconds
+h = 1 / PWM_FREQUENCY / 50  # step size of integration in seconds
 I0 = np.zeros(3)
 
 if (int((tf - t0) / MODEL_STEP) * MODEL_STEP == (tf - t0)):
@@ -117,7 +117,8 @@ if actbool == 0:
     for i in range(0, Ncontrol):  # loop for control-cycle
 
         if math.fmod(i,
-                     int(Ncontrol / 100)) == 0:  # we are printing percentage of cycle completed to keep track of simulation
+                     int(
+                         Ncontrol / 100)) == 0:  # we are printing percentage of cycle completed to keep track of simulation
             print(int(100 * i / Ncontrol))
 
         if (i % (i_time_gps + i_time_J2) <= i_time_gps):
@@ -133,7 +134,7 @@ if actbool == 0:
             Advitiy.setMag_b_m_c(defblock.magnetometer(Advitiy))
             Advitiy.setgpsData(defblock.gps(Advitiy))
             Advitiy.setOmega_m(defblock.gyroscope(Advitiy))
-        #		Advitiy.setJ2Data(defblock.J2_propagator(Advitiy))
+        #        Advitiy.setJ2Data(defblock.J2_propagator(Advitiy))
 
         if (sensbool == 1):
             # getting sensor reading from models
@@ -152,7 +153,7 @@ if actbool == 0:
             Advitiy.setPos_J2(propagate(pos, vel, time_J2, 0.5, drag=False)[0])
             Advitiy.setVel_J2(propagate(pos, vel, time_J2, 0.5, drag=False)[1])
 
-        #		Advitiy.setJ2Data(sensor.J2_propagator(Advitiy))
+        #        Advitiy.setJ2Data(sensor.J2_propagator(Advitiy))
 
         # Estimated quaternion
         if (estbool == 0):  # qBO is same as obtained by integrator
@@ -202,7 +203,8 @@ if actbool == 0:
                 torque_dist_aero[i * int(Nmodel / Ncontrol) + k, :] = Advitiy.getaeroDisturbance_b()
                 torque_dist_solar[i * int(Nmodel / Ncontrol) + k, :] = Advitiy.getsolarDisturbance_b()
                 torque_dist_total[i * int(Nmodel / Ncontrol) + k, :] = torque_dist_gg[i * int(Nmodel / Ncontrol) + k,
-                                                                       :] + torque_dist_aero[i * int(Nmodel / Ncontrol) + k,
+                                                                       :] + torque_dist_aero[
+                                                                            i * int(Nmodel / Ncontrol) + k,
                                                                             :] + torque_dist_solar[
                                                                                  i * int(Nmodel / Ncontrol) + k, :]
                 Advitiy.setDisturbance_b(torque_dist_total[i * int(Nmodel / Ncontrol) + k, :].copy())
@@ -236,7 +238,7 @@ if actbool == 1:
             Advitiy.setMag_b_m_c(defblock.magnetometer(Advitiy))
             Advitiy.setgpsData(defblock.gps(Advitiy))
             Advitiy.setOmega_m(defblock.gyroscope(Advitiy))
-        #		Advitiy.setJ2Data(defblock.J2_propagator(Advitiy))
+        #        Advitiy.setJ2Data(defblock.J2_propagator(Advitiy))
 
         if (sensbool == 1):
             # getting sensor reading from models
@@ -255,7 +257,7 @@ if actbool == 1:
             Advitiy.setPos_J2(propagate(pos, vel, time_J2, 0.5, drag=False)[0])
             Advitiy.setVel_J2(propagate(pos, vel, time_J2, 0.5, drag=False)[1])
 
-        #		Advitiy.setJ2Data(sensor.J2_propagator(Advitiy))
+        #        Advitiy.setJ2Data(sensor.J2_propagator(Advitiy))
 
         # Estimated quaternion
         if (estbool == 0):  # qBO is same as obtained by integrator
@@ -320,7 +322,7 @@ if actbool == 1:
             # Use rk4 solver to calculate the state for next step
             for l in range(int(MODEL_STEP * PWM_FREQUENCY)):
                 integration_step_high = v_duty_cycle * (1 / PWM_FREQUENCY) / 25
-                for m in range(25):     # for high voltage part of PWM
+                for m in range(25):  # for high voltage part of PWM
                     time_since_control_step = k * MODEL_STEP + m * integration_step_high
                     Advitiy.setTime(i * CONTROL_STEP + time_since_control_step)
                     rk4TimeArray = np.linspace(time_since_control_step, time_since_control_step + integration_step_high,
@@ -328,8 +330,8 @@ if actbool == 1:
                     torquerCurrentArray = act.getCurrentList(v_duty_cycle, rk4TimeArray, 3, edgeCurrentArray)
                     torqueApplied = np.cross(No_Turns * torquerCurrentArray * v_A_Torquer, Advitiy.getMag_b_m_c())
                     sol.updateStateTimeRK4_act_1(Advitiy, x_dot_BO, h, torqueApplied)
-                integration_step_low = (1 - v_duty_cycle)/PWM_FREQUENCY/25
-                for m in range(25):     # for low voltage part of PWM
+                integration_step_low = (1 - v_duty_cycle) / PWM_FREQUENCY / 25
+                for m in range(25):  # for low voltage part of PWM
                     time_since_control_step = k * MODEL_STEP + (m + 25) * integration_step_high
                     Advitiy.setTime(i * CONTROL_STEP + time_since_control_step)
                     rk4TimeArray = np.linspace(time_since_control_step, time_since_control_step + integration_step_high,
