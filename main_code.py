@@ -169,23 +169,14 @@ if actbool == 0:
         if (contcons == 1):
             # getting control torque by omega controller
             # k = 0.001
-            torque_control[i * int(Nmodel / Ncontrol):(i + 1) * (int(Nmodel / Ncontrol)), :] = -0.001 * Advitiy.getW_BI_b()
+            torque_control[i * int(Nmodel / Ncontrol):(i + 1) * (int(Nmodel / Ncontrol)), :] \
+                = -0.001 * Advitiy.getW_BI_b()
             # print(Advitiy.getW_BI_b())
             Advitiy.setControl_b(torque_control[i * int(Nmodel / Ncontrol), :])
 
         # torque applied
 
         Advitiy.setAppTorque_b(Advitiy.getControl_b())
-
-        if (actbool == 1):
-        # getting applied torque by actuator modelling (magnetic torque limitation is being considered)
-            torqueRequired = Advitiy.getControl_b()
-            v_mag_B = Advitiy.getQ_BO()
-            v_magMoment = np.cross(v_mag_B, torqueRequired)/(np.linalg.norm(v_mag_B)**2)
-            currentRequired = v_magMoment/v_A_Torquer/No_Turns
-            v_duty_cycle = currentRequired/RESISTANCE
-            edgeCurrentArray = act.getEdgeCurrent(v_duty_cycle, I0)
-            I0 = edgeCurrentArray[len(edgeCurrentArray)-1, :]
 
         for k in range(0, int(Nmodel / Ncontrol)):  # loop for environment-cycle
             # Set satellite parameters
@@ -218,8 +209,7 @@ if actbool == 0:
 
             # Use rk4 solver to calculate the state for next step
 
-            h = 0.1
-            sol.updateStateTimeRK4_0(Advitiy, x_dot_BO, h)
+            sol.updateStateTimeRK4_act_0(Advitiy, x_dot_BO, h)
             # storing data in matrices
             m_state[i * int(Nmodel / Ncontrol) + k + 1, :] = Advitiy.getState()
             m_euler[i * int(Nmodel / Ncontrol) + k + 1, :] = qnv.quat2euler(Advitiy.getQ_BO())
@@ -282,22 +272,18 @@ if actbool == 1:
         if (contcons == 1):
             # getting control torque by omega controller
             # k = 0.001
-            torque_control[i * int(Nmodel / Ncontrol):(i + 1) * (int(Nmodel / Ncontrol)),
-            :] = -0.001 * Advitiy.getW_BI_b()
+            torque_control[i * int(Nmodel / Ncontrol):(i + 1) * (int(Nmodel / Ncontrol)), :] \
+                = -0.001 * Advitiy.getW_BI_b()
             # print(Advitiy.getW_BI_b())
             Advitiy.setControl_b(torque_control[i * int(Nmodel / Ncontrol), :])
 
         # torque applied
-
-
-
-
         # getting applied torque by actuator modelling (magnetic torque limitation is being considered)
         torqueRequired = Advitiy.getControl_b()
-        v_mag_B = Advitiy.getQ_BO()
+        v_mag_B = Advitiy.getMag_b_m_c()
         v_magMoment = np.cross(v_mag_B, torqueRequired) / (np.linalg.norm(v_mag_B) ** 2)
         currentRequired = v_magMoment / v_A_Torquer / No_Turns
-        v_duty_cycle = currentRequired / RESISTANCE
+        v_duty_cycle = currentRequired / RESISTANCE / PWM_AMPLITUDE
         edgeCurrentArray = act.getEdgeCurrent(v_duty_cycle, I0)
         I0 = edgeCurrentArray[len(edgeCurrentArray) - 1, :]
 
@@ -334,23 +320,23 @@ if actbool == 1:
             # Use rk4 solver to calculate the state for next step
             for l in range(int(MODEL_STEP * PWM_FREQUENCY)):
                 integration_step_high = v_duty_cycle * (1 / PWM_FREQUENCY) / 25
-                for m in range(25):
+                for m in range(25):     # for high voltage part of PWM
                     time_since_control_step = k * MODEL_STEP + m * integration_step_high
                     Advitiy.setTime(i * CONTROL_STEP + time_since_control_step)
                     rk4TimeArray = np.linspace(time_since_control_step, time_since_control_step + integration_step_high,
                                                3, endpoint=True)
                     torquerCurrentArray = act.getCurrentList(v_duty_cycle, rk4TimeArray, 3, edgeCurrentArray)
                     torqueApplied = np.cross(No_Turns * torquerCurrentArray * v_A_Torquer, Advitiy.getMag_b_m_c())
-                    sol.updateStateTimeRK4_1(Advitiy, x_dot_BO, h, torqueApplied)
+                    sol.updateStateTimeRK4_act_1(Advitiy, x_dot_BO, h, torqueApplied)
                 integration_step_low = (1 - v_duty_cycle)/PWM_FREQUENCY/25
-                for m in range(25):
-                    time_since_control_step = k * MODEL_STEP + m * integration_step_high
+                for m in range(25):     # for low voltage part of PWM
+                    time_since_control_step = k * MODEL_STEP + (m + 25) * integration_step_high
                     Advitiy.setTime(i * CONTROL_STEP + time_since_control_step)
                     rk4TimeArray = np.linspace(time_since_control_step, time_since_control_step + integration_step_high,
                                                3, endpoint=True)
                     torquerCurrentArray = act.getCurrentList(v_duty_cycle, rk4TimeArray, 3, edgeCurrentArray)
                     torqueApplied = np.cross(No_Turns * torquerCurrentArray * v_A_Torquer, Advitiy.getMag_b_m_c())
-                    sol.updateStateTimeRK4_1(Advitiy, x_dot_BO, h, torqueApplied)
+                    sol.updateStateTimeRK4_act_1(Advitiy, x_dot_BO, h, torqueApplied)
             # storing data in matrices
             m_state[i * int(Nmodel / Ncontrol) + k + 1, :] = Advitiy.getState()
             m_euler[i * int(Nmodel / Ncontrol) + k + 1, :] = qnv.quat2euler(Advitiy.getQ_BO())

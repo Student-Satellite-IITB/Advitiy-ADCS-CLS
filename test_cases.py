@@ -15,7 +15,7 @@ orbitbool = 0
 # boolean determining whether disturbance will act or not
 # 1 means disturbance present
 # 0 means disturbance absent
-distbool = 1
+distbool = 0
 
 # boolean determining whether sensor modelling will be used or not
 # 1 means sensor-modelling present
@@ -30,10 +30,10 @@ estbool = 0
 # constant determining which controller will act or not
 # 1 means detumbing_controller present
 # 0 means controller absent
-contcons = 0
+contcons = 1
 
 
 # boolean determining whether actuator modelling will be used or not
 # 1 means actuator-modelling present
 # 0 means actuator modelling absent
-actbool = 0
+actbool = 1

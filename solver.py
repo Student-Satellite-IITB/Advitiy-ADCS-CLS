@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def updateStateTimeRK4_0(sat, f, h):  # This is Runge Kutta-4 solver for ordinary differential equation.
+def updateStateTimeRK4_act_0(sat, f, h):  # This is Runge Kutta-4 solver for ordinary differential equation.
     """
         Input:
                 satellite object
@@ -52,7 +52,7 @@ def updateStateTimeRK4_0(sat, f, h):  # This is Runge Kutta-4 solver for ordinar
     return
 
 
-def updateStateTimeRK4_1(sat, f, h, torqueArray):  # This is Runge Kutta-4 solver for ordinary differential equation,
+def updateStateTimeRK4_act_1(sat, f, h, torqueArray):  # This is Runge Kutta-4 solver for ordinary differential equation,
     # with integrated actuator model.
     """
     Input:
